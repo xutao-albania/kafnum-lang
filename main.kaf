@@ -1,4 +1,12 @@
-int num 15
-int number 50
-print num
-print number
+int a 20
+int b 45
+int c 0  # Объявляем переменную c
+
+bool isPositive true
+string message "Результат это"
+add a b c 
+if isPositive is_true!
+    print message
+else
+    print "Значения не позитивное"
+sys out 1
