@@ -16,7 +16,7 @@ class Parser:
     def parse(self):
         for line in self.lines:
             tokens = line.split()
-            if not tokens:  # Пропускаем пустые строки
+            if not tokens:  
                 continue
             if tokens[0] == "int":
                 self.ast.append(("declare_int", tokens[1], int(tokens[2])))
@@ -33,7 +33,7 @@ class Parser:
             elif tokens[0] == "from":
                 self.ast.append(("move", tokens[1], tokens[3]))
             elif tokens[0] == "add":
-                self.ast.append(("add", tokens[1], tokens[2], tokens[3]))  # Добавляем третий аргумент
+                self.ast.append(("add", tokens[1], tokens[2], tokens[3]))  
             elif tokens[0] == "sub":
                 self.ast.append(("sub", tokens[1], tokens[2], tokens[3]))
             elif tokens[0] == "mul":
@@ -45,7 +45,7 @@ class Parser:
             elif tokens[0] == "else":
                 self.ast.append(("else",))
             elif tokens[0] == "print":
-                self.ast.append(("print", ' '.join(tokens[1:])))  # Поддержка печати строк
+                self.ast.append(("print", ' '.join(tokens[1:])))  
         return self.ast
 
 class Interpreter:
@@ -55,7 +55,7 @@ class Interpreter:
         self.variables = {}
 
     def run(self):
-        current_else = False  # Переменная для отслеживания else
+        current_else = False  
         for command in self.ast:
             if command[0] == "declare_int":
                 var_name, value = command[1], command[2]
@@ -65,29 +65,29 @@ class Interpreter:
             elif command[0] == "declare_bool":
                 var_name, value = command[1], command[2]
                 address = len(self.variables)
-                self.memory.set(address, int(value))  # Преобразуем True/False в 1/0
+                self.memory.set(address, int(value))  
                 self.variables[var_name] = address
             elif command[0] == "declare_string":
                 var_name, value = command[1], command[2]
                 address = len(self.variables)
-                self.memory.set(address, value)  # Сохраняем строку
+                self.memory.set(address, value)  
                 self.variables[var_name] = address
             elif command[0] == "je":
                 var_name, label = command[1], command[2]
                 address = self.variables.get(var_name)
                 if self.memory.get(address) != 0:
-                    continue  # Пропускаем если условие истинно
+                    continue  
                 else:
-                    break  # Иначе выходим из цикла
+                    break  
             elif command[0] == "if":
                 var_name, label = command[1], command[2]
                 address = self.variables.get(var_name)
                 if self.memory.get(address) != 0:
                     current_else = False
                 else:
-                    current_else = True  # Устанавливаем флаг else
+                    current_else = True
             elif command[0] == "else":
-                current_else = not current_else  # Меняем флаг else
+                current_else = not current_else 
             elif command[0] == "declare_array":
                 array_name, size = command[1], command[2]
                 base_address = len(self.variables)
