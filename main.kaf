@@ -1,0 +1,4 @@
+int num 15
+int number 50
+print num
+print number
