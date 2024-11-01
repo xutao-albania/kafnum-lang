@@ -3,3 +3,16 @@
 /venv
 *.kaf
 *.spec
+/build/
+/dist/
+
+/venv/
+
+*.spec
+*.pyc
+__pycache__/
+
+LICENSE
+
+*.log
+*.tmp
